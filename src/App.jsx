@@ -152,13 +152,15 @@ export default function EmailInviteEditor() {
   const [headerImageUrl, setHeaderImageUrl] = useState("https://i.postimg.cc/tC0Tvq1C/Designer-(4).png");
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
-  const [signature, setSignature] = useState("Best regards,<br />Birger, Bosse, Björn, Bingo, & Bodil<br />BYPS");
+  const [signature, setSignature] = useState("Best regards,<br />Elin, Oscar, Kaleb, Daisy, Fabian & Jessica<br />Vivicta Young Professionals Stockholm");
   const [showFormsLink, setShowFormsLink] = useState(false);
   const [formsLink, setFormsLink] = useState("");
   const [showDate, setShowDate] = useState(false);
   const [date, setDate] = useState("");
   const [showLocation, setShowLocation] = useState(false);
   const [location, setLocation] = useState("");
+  const [footerCity, setFooterCity] = useState("Stockholm");
+  const [footerEmail, setFooterEmail] = useState("vyps@tietoevry.com");
 
   const generatedHtml = `<!DOCTYPE html>
 <html>
@@ -184,8 +186,8 @@ export default function EmailInviteEditor() {
   </tr>
   <tr>
     <td style="background:#5C33B0;padding:22px;color:#fff;font-size:11px;">
-      ® VYPS, Solna Stockholm 2026<br />
-      <a href="mailto:vyps@tietoevry.com" style="color:white;text-decoration:underline;">Questions? Mail us!</a>
+      ® VYPS, ${footerCity} ${new Date().getFullYear()}<br />
+      <a href="mailto:${footerEmail}" style="color:white;text-decoration:underline;">Questions? Send us an email!</a>
     </td>
   </tr>
 </table>
@@ -288,14 +290,6 @@ export default function EmailInviteEditor() {
               />
             </>
           )}
-          <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 6, color: darkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)" }}>Signature</label>
-          <Textarea
-            isDark={darkMode}
-            value={signature}
-            onChange={(e) => setSignature(e.target.value)}
-            placeholder="Signature (HTML allowed)"
-            rows={3}
-          />
           <label style={{ display: "flex", alignItems: "center", marginBottom: 16, cursor: "pointer", fontSize: 14, fontWeight: 500 }}>
             <input
               type="checkbox"
@@ -324,6 +318,28 @@ export default function EmailInviteEditor() {
               />
             </>
           )}
+          <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 6, color: darkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)" }}>Signature</label>
+          <Textarea
+            isDark={darkMode}
+            value={signature}
+            onChange={(e) => setSignature(e.target.value)}
+            placeholder="Signature (HTML allowed)"
+            rows={3}
+          />
+          <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 6, color: darkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)" }}>Footer City/Location</label>
+          <Input
+            isDark={darkMode}
+            value={footerCity}
+            onChange={(e) => setFooterCity(e.target.value)}
+            placeholder="e.g., Solna Stockholm"
+          />
+          <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 6, color: darkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)" }}>Contact Email</label>
+          <Input
+            isDark={darkMode}
+            value={footerEmail}
+            onChange={(e) => setFooterEmail(e.target.value)}
+            placeholder="Contact email address"
+          />
         </Card>
       </div>
 
@@ -342,23 +358,9 @@ export default function EmailInviteEditor() {
             }}
             dangerouslySetInnerHTML={{ __html: generatedHtml }}
           />
-          <div style={{ marginTop: 12 }}>
-            <Button onClick={() => {
-              navigator.clipboard.write([
-                new ClipboardItem({
-                  'text/html': new Blob([generatedHtml], { type: 'text/html' })
-                })
-              ]).then(() => {
-                alert('Email content copied to clipboard!');
-              }).catch(err => {
-                navigator.clipboard.writeText(generatedHtml);
-                alert('Email HTML copied to clipboard!');
-              });
-            }}>
-              Copy to clipboard
-            </Button>
-            <p style={{ marginTop: 12, fontSize: 12, color: darkMode ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)" }}>
-              <em>You might have to realign text to center in Outlook. Align &gt; Align center.</em>
+          <div style={{ marginTop: 20 }}>
+            <p style={{ fontSize: 12, color: darkMode ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)" }}>
+              <em>Highlight the content above and copy-paste it into an Outlook email draft</em>
             </p>
           </div>
         </Card>
